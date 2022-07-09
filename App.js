@@ -1,102 +1,76 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+// App.js
+import React, {useEffect, useState} from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import Splash from './src/screens/Splash';
+import AllUsers from './src/screens/AllUsers';
+import Leaderboard from './src/screens/Leaderboard';
+import User from './src/screens/User';
 
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+function Home() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <Tab.Navigator 
+      initialRouteName="AllUsers"
+      screenOptions={{
+        tabBarActiveTintColor: '#000',
+    }}>
+      <Tab.Screen name="AllUsers" 
+        component={AllUsers} 
+        options={{ 
+          headerTintColor: '#000',
+          tabBarLabel: 'Users',
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons name="home" color={focused ? "#000" : "#808080"} size={26} />
+          ),
+          }} />
+      <Tab.Screen name="Leaderboard" 
+        component={Leaderboard} 
+        options={{ 
+          headerTintColor: '#000',
+          tabBarLabel: 'Leaderboard',
+          tabBarIcon: ({ focused }) => (
+          <MaterialCommunityIcons name="weight-lifter" color={focused ? "#000" : "#808080"} size={26} />
+          ),
+        }}/>
+    </Tab.Navigator>
   );
-};
+} 
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function App() {
+ 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-          Leaderboard
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-         
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen 
+                  name="Splash" 
+                  component={Splash} 
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                  name="Home" 
+                  component={Home} 
+                  options={{ headerShown: false }} />
+                <Stack.Screen name="User" component={User} 
+                  options={({ route }) => ({ 
+                    title: route.params.name,
+                    headerStyle: {
+                      backgroundColor:"#FFF",
+                    },
+                    headerTintColor: '#000',
+                    headerTitleStyle: {
+                      textTransform: 'uppdercase',
+                    }, 
+                  })}/>
+              </Stack.Navigator>
+            </NavigationContainer>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
