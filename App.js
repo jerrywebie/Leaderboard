@@ -9,6 +9,9 @@ import Splash from './src/screens/Splash';
 import AllUsers from './src/screens/AllUsers';
 import Leaderboard from './src/screens/Leaderboard';
 import User from './src/screens/User';
+import UserContext from '../Leaderboard/src/contexts/UserContext';
+
+import userList from './src/data/leaderboard.json';
 
 function Home() {
   return (
@@ -43,32 +46,48 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App() {
- 
+  const [users, setUsers] = useState([]);
+
+    
+  useEffect(() => {
+    function getUsers () {
+       let  userData = [];
+       for (const [key, value] of Object.entries(userList)) {
+        userData.push(userList[`${key}`]);
+       }
+       setUsers(userData);
+     }
+     getUsers();
+     
+   }, [setUsers]);
   return (
-            <NavigationContainer>
-              <Stack.Navigator>
-                <Stack.Screen 
-                  name="Splash" 
+    <UserContext.Provider value={{users}}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Splash" 
                   component={Splash} 
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen 
-                  name="Home" 
-                  component={Home} 
-                  options={{ headerShown: false }} />
-                <Stack.Screen name="User" component={User} 
-                  options={({ route }) => ({ 
-                    title: route.params.name,
-                    headerStyle: {
-                      backgroundColor:"#FFF",
-                    },
-                    headerTintColor: '#000',
-                    headerTitleStyle: {
-                      textTransform: 'uppdercase',
-                    }, 
-                  })}/>
-              </Stack.Navigator>
-            </NavigationContainer>
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen 
+            name="Home" 
+            component={Home} 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen name="User" component={User} 
+            options={({ route }) => ({ 
+            title: route.params.name,
+            headerStyle: {
+            backgroundColor:"#FFF",
+          },
+            headerTintColor: '#000',
+            headerTitleStyle: {
+            textTransform: 'uppdercase',
+          }, 
+        })}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
 

@@ -8,15 +8,12 @@ const windowHeight = Dimensions.get('window').height;
 
 const Splash = ({ navigation }) => {
 
-  const timerRef = useRef(0);
+  const timerRef = useRef(null);
 
-  React.useEffect(() => {
-    if (timerRef.current < 25) {
-      timerRef.current += 1;
+  useEffect(() => {
       const timer = setTimeout(() =>  navigation.replace('Home'), 2500);
-
       return () => clearTimeout(timer);
-    }
+    
   }, []);
  
   return (
