@@ -6,6 +6,7 @@ import { View, Text,
 
 import UserContext from '../contexts/UserContext';
 import useLeaderboard from '../hooks/useLeaderboard';
+import UserList from '../components/UserList';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -19,8 +20,11 @@ const Leaderboard = ({ navigation }) => {
  
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(leaderboard?.currentUser)}</Text>
-      <Text>{JSON.stringify( leaderboard?.topTenUsers)}</Text>
+      <UserList 
+        data={leaderboard?.topTenUsers} 
+        navigation={navigation} 
+        isLeaderboard={true} 
+        currentUser={leaderboard?.currentUser}/>
     </View>
   );
 }

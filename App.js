@@ -6,36 +6,43 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Splash from './src/screens/Splash';
-import AllUsers from './src/screens/AllUsers';
+import Users from './src/screens/Users';
 import Leaderboard from './src/screens/Leaderboard';
 import User from './src/screens/User';
 import UserContext from '../Leaderboard/src/contexts/UserContext';
+import Styles from '../Leaderboard/src/utility/styles';
 
 import userList from './src/data/leaderboard.json';
 
 function Home() {
   return (
     <Tab.Navigator 
-      initialRouteName="AllUsers"
+      initialRouteName="Users"
       screenOptions={{
-        tabBarActiveTintColor: '#000',
+        tabBarActiveTintColor: Styles.colors.emeraldGreen,
     }}>
-      <Tab.Screen name="AllUsers" 
-        component={AllUsers} 
+      <Tab.Screen name="Users" 
+        component={Users} 
         options={{ 
-          headerTintColor: '#000',
+          headerTintColor: Styles.colors.white,
+          headerStyle: {
+            backgroundColor: Styles.colors.emeraldGreen,
+          },
           tabBarLabel: 'Users',
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons name="home" color={focused ? "#000" : "#808080"} size={26} />
+            <MaterialCommunityIcons name="account-group" color={focused ? Styles.colors.emeraldGreen : Styles.colors.gray} size={26} />
           ),
           }} />
       <Tab.Screen name="Leaderboard" 
         component={Leaderboard} 
         options={{ 
-          headerTintColor: '#000',
+          headerTintColor: Styles.colors.white,
+          headerStyle: {
+            backgroundColor: Styles.colors.emeraldGreen,
+          },
           tabBarLabel: 'Leaderboard',
           tabBarIcon: ({ focused }) => (
-          <MaterialCommunityIcons name="weight-lifter" color={focused ? "#000" : "#808080"} size={26} />
+          <MaterialCommunityIcons name="trophy" color={focused ? Styles.colors.emeraldGreen : Styles.colors.gray} size={26} />
           ),
         }}/>
     </Tab.Navigator>
@@ -78,11 +85,12 @@ function App() {
             options={({ route }) => ({ 
             title: route.params.name,
             headerStyle: {
-            backgroundColor:"#FFF",
-          },
-            headerTintColor: '#000',
+              backgroundColor: Styles.colors.emeraldGreen,
+            },
+            headerTintColor: Styles.colors.white,
             headerTitleStyle: {
             textTransform: 'uppdercase',
+            fontFamily: 'Poppins-Regular',
           }, 
         })}/>
         </Stack.Navigator>

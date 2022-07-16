@@ -1,44 +1,68 @@
 // splash component
-import React, { useEffect, useRef} from 'react';
-import { View, Text, Pressable, 
+import React, { useEffect} from 'react';
+import { View, Text,
    StyleSheet, StatusBar, 
-  Dimensions } from 'react-native';
+  Image } from 'react-native';
 
-const windowHeight = Dimensions.get('window').height;
+import splashImage from '../assets/images/splash.png';
+import Styles from '../utility/styles';
 
 const Splash = ({ navigation }) => {
 
-  const timerRef = useRef(null);
-
   useEffect(() => {
-      const timer = setTimeout(() =>  navigation.replace('Home'), 2500);
+      const timer = setTimeout(() =>  navigation.replace('Home'), 3000);
       return () => clearTimeout(timer);
     
   }, []);
  
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: Styles.colors.emeraldGreen}]}>
       <StatusBar hidden={true}/>
-        <Text>Leaderboard</Text>
+      <View style={styles.imageContainer}>
+        <Image source={splashImage} resizeMode="contain" style={styles.splashImage} />
+        <Text style={styles.splashText}>Leaderboard</Text>
+      </View>
+      <View style={styles.developedBy}>
+        <Text style={styles.developerName}>developed by PHYU ZIN</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  bannerImage : {
     flex: 1,
+  },
+  imageContainer : {
+    flex: 4,  
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  splashImage : {
+    alignSelf: 'center',
+    borderWidth: 4,
+    width: Styles.standard.baseTwenty * 5,
+    height: Styles.standard.baseTwenty * 5,
+    borderColor: Styles.colors.white, 
+    borderRadius: Styles.standard.baseTwenty * 3,
   },
   splashText: {
-    flex: 1,
+   alignSelf: 'center',
+   color: Styles.colors.white,
+   paddingVertical: Styles.standard.baseTwenty,
+   fontSize: Styles.size.medium,
+   fontFamily: 'Poppins-Bold'
+  },
+  developedBy: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: Styles.standard.baseTwenty,
+  },
+  developerName: {
+    color: Styles.colors.light,
+    fontSize: Styles.standard.baseTen,
+    fontFamily: 'Poppins-Regular'
   }
- 
 });
 
 

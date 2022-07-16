@@ -1,43 +1,27 @@
 // splash component
 import React from 'react';
-import { View, Text,
-   StyleSheet,
-  Dimensions } from 'react-native';
+import { View,  StyleSheet } from 'react-native';
 
-const windowHeight = Dimensions.get('window').height;
+import bananaImage from '../assets/images/banana_004.png';
+import AnimatableBananaCount from '../components/AnimatableBananaCount';
+import UserDetails from '../components/UserDetails';
 
-const User = ({ navigation }) => {
+import Styles from '../utility/styles';
+
+const User = ({ route }) => {
+  const { user, isLeaderboard } = route.params;
   return (
-    <View style={styles.container}>
-      <Text>User</Text>
+    <View style={[styles.container, {backgroundColor: Styles.colors.emeraldGreen}]}>
+      <AnimatableBananaCount imageSource={bananaImage} bananaCount={user.bananas} />
+      <UserDetails user={user} isLeaderboard={isLeaderboard}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  bannerImage : {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
-  exploreButton: {
-    marginTop: windowHeight - 200, // need to change device height 
-    backgroundColor: "#FF2400",
-    width: '80%',
-    marginHorizontal: 20,
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: '#f1f1f1',
-    textAlign: 'center',
-    lineHeight: 24,
-    paddingVertical: 20,
-    fontSize: 20,
-    fontFamily: 'Raleway-Bold'
-  }
 });
 
 
